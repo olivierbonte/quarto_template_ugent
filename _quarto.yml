@@ -3,8 +3,18 @@ project:
 
 book:
   title: "quarto_template_ugent"
-  author: "Norah Jones"
-  date: "7/29/2025"
+  subtitle: "Academic year: 2025 - 2026"
+  author: 
+    name: Olivier Bonte
+    affiliation: Ghent University
+    email: olivier.bonte@ugent.be  
+  date: today
+  downloads: [pdf]
+  repo-url: https://github.com/olivierbonte/quarto_template_ugent
+  navbar: 
+    title: "quarto_template_ugent"
+    search: true 
+    logo: "figures/logo_H-CEL_no_background.svg"
   chapters:
     - index.qmd
     - intro.qmd
@@ -19,8 +29,13 @@ format:
     theme:
       - cosmo
       - brand
+    code-overflow: wrap
+    code-fold: show
   pdf:
     documentclass: scrreprt
+    include-in-header: preamble.tex
 
-
-
+# Allows caching of notebooks when previewing 
+execute:
+  cache: true
+  freeze: auto
