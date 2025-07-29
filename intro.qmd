@@ -23,3 +23,22 @@ ax.set_rticks([0.5, 1, 1.5, 2])
 ax.grid(True)
 plt.show()
 ```
+
+We can also make feedback diagrams. 
+
+```{mermaid}
+flowchart TD
+  A(["$$\frac{\partial h}{\partial t}$$"])
+  B["$$\Delta \theta$$"]
+  C["$$\gamma_{\theta}$$"]
+  D["$$|w_s|$$"]
+  E(["$$\frac{\partial \langle \theta \rangle}{\partial t}$$"])
+
+  A ~~~ B & C & D
+  B & C & D ~~~ E
+
+  B -.-> A
+
+  classDef largeFontSize font-size:22px;
+  class A,B,C,D,E largeFontSize;
+```
