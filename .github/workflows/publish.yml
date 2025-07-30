@@ -1,0 +1,61 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+name: Quarto Publish
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: 1.7.32
+          tinytex: true
+          
+      - name: Setup Python with Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          environment-file: environment.yml
+          activate-environment: quarto_template
+          auto-activate-base: false 
+      
+      - name: Install Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-dependencies: true
+
+      - name: Check Quarto and dependencies
+        shell: bash -el {0}
+        env:
+          QUARTO_CHROMIUM: ${{ steps.setup-chrome.outputs.chrome-path }}
+        run: quarto check
+
+      - name: Render
+        shell: bash -el {0}
+        env:
+          QUARTO_CHROMIUM: ${{ steps.setup-chrome.outputs.chrome-path }}
+        run: quarto render 
+
+      - name: Save PDF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: _book/quarto_template_ugent.pdf
+          retention-days: 90
+          name: rendered_pdf_artifact
+
+      - name: Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        env:
+          QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
+        with: 
+          target: quarto-pub
+          render: false
