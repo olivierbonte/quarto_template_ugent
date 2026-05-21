@@ -45,7 +45,7 @@ for Chrome.
 
 For this purpose, your clone or fork of this repository should be on GitHub. 
 
-### Activating Quarto Pub
+### Activating Github Pages
 
 For this template, the website is hosted using [GitHub Pages](https://quarto.org/docs/publishing/github-pages.html). 
 
