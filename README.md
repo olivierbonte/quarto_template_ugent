@@ -51,7 +51,7 @@ For this template, the website is hosted using [GitHub Pages](https://quarto.org
 
 For your own use, start by running
 ```
-quarto publish gh-pages. 
+quarto publish gh-pages
 ```
 This wil automate the process of setting up a `gh-pages` branch from which the website is hosted. 
 
